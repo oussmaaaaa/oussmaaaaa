@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>✨ Test MBTI Romantique – Choisis tes traits ✨</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #fff5f8 0%, #ffe9f0 100%);
+            font-family: 'Segoe UI', 'Quicksand', 'Poppins', system-ui, -apple-system, sans-serif;
+            padding: 2rem 1rem;
+            min-height: 100vh;
+            color: #3a2c32;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .test-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .test-header h1 {
+            font-size: 2.2rem;
+            background: linear-gradient(135deg, #c45c7a, #e591af);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .test-header p {
+            color: #a45c72;
+            font-weight: 500;
+            margin-top: 0.5rem;
+        }
+
+        .heart-divider {
+            font-size: 1.3rem;
+            letter-spacing: 5px;
+            color: #e2a0b8;
+            margin: 0.5rem 0;
+        }
+
+        .info-box {
+            background: #fff0f5;
+            border-radius: 1rem;
+            padding: 0.8rem;
+            max-width: 600px;
+            margin: 0 auto 1rem auto;
+            font-size: 0.85rem;
+            color: #b65b7e;
+            text-align: center;
+        }
+
+        .section-card {
+            background: rgba(255, 250, 252, 0.95);
+            backdrop-filter: blur(3px);
+            border-radius: 2rem;
+            box-shadow: 0 20px 35px -12px rgba(110, 40, 60, 0.2);
+            margin-bottom: 2rem;
+            overflow: hidden;
+            border: 1px solid rgba(255, 215, 225, 0.7);
+        }
+
+        .section-title {
+            background: #fff0f5e6;
+            padding: 1rem 1.5rem;
+            border-bottom: 2px solid #fcd5e3;
+            text-align: center;
+        }
+
+        .section-title h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #aa6f86;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .section-title h2 span {
+            background: #e6a5bd;
+            color: white;
+            font-size: 0.85rem;
+            padding: 4px 14px;
+            border-radius: 50px;
+        }
+
+        .dual-columns {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            padding: 1.5rem;
+        }
+
+        .trait-column {
+            flex: 1;
+            min-width: 300px;
+            background: #ffffffdd;
+            border-radius: 1.5rem;
+            padding: 1.2rem;
+            border: 1px solid #ffe2ec;
+        }
+
+        .trait-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #f8d5e3;
+        }
+
+        .trait-letter {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #c45c7a, #e591af);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .trait-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b85f7c;
+        }
+
+        .reset-column-btn {
+            background: transparent;
+            border: 1px solid #e2a0b8;
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            color: #b65b7e;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .reset-column-btn:hover {
+            background: #ffeef4;
+        }
+
+        .trait-list {
+            list-style: none;
+            margin: 1rem 0;
+        }
+
+        .trait-item {
+            background: #fff9fb;
+            margin: 0.6rem 0;
+            padding: 0.7rem 1rem;
+            border-radius: 1rem;
+            border: 1.5px solid #f3d5e2;
+            transition: all 0.2s;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .trait-item:hover {
+            background: #ffeef4;
+            border-color: #e2a0b8;
+            transform: translateX(3px);
+        }
+
+        .trait-item.selected {
+            background: linear-gradient(95deg, #f3dae6, #fce4ef);
+            border-color: #e6aac4;
+            box-shadow: 0 2px 8px rgba(180, 80, 110, 0.15);
+        }
+
+        .trait-item.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: #f5f0f2;
+        }
+
+        .trait-item.disabled:hover {
+            transform: none;
+            background: #f5f0f2;
+        }
+
+        .trait-check {
+            font-size: 1.3rem;
+            width: 28px;
+            text-align: center;
+        }
+
+        .trait-check.selected-check {
+            color: #c26084;
+        }
+
+        .trait-check.unselected-check {
+            color: #d4a0b6;
+        }
+
+        .trait-text {
+            flex: 1;
+            font-size: 0.9rem;
+            color: #4a2e3a;
+            line-height: 1.3;
+        }
+
+        .progress-indicator {
+            text-align: center;
+            margin-top: 0.8rem;
+            font-size: 0.75rem;
+            color: #b28094;
+            font-weight: 500;
+        }
+
+        .reveal-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 1.5rem 0;
+        }
+
+        .btn-primary {
+            background: linear-gradient(95deg, #e0a1bb, #c97e9c);
+            border: none;
+            padding: 1rem 2.5rem;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: white;
+            border-radius: 80px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 18px rgba(180, 80, 110, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.02);
+            background: linear-gradient(95deg, #da90ae, #bd6d8f);
+        }
+
+        .result-card {
+            background: #fff7f9f2;
+            border-radius: 2rem;
+            padding: 1.5rem;
+            text-align: center;
+            border: 2px solid #ffdae8;
+            margin: 1rem 0;
+            display: none;
+        }
+
+        .result-type {
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(145deg, #b8426c, #e490ae);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .result-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #79465e;
+            margin: 0.5rem 0;
+        }
+
+        .result-desc {
+            font-size: 0.95rem;
+            color: #5c3d49;
+            max-width: 500px;
+            margin: 0.5rem auto;
+            background: #ffeef4;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+        }
+
+        .btn-secondary {
+            background: linear-gradient(95deg, #e0a1bb, #c97e9c);
+            border: none;
+            padding: 0.8rem 1.8rem;
+            font-size: 1rem;
+            font-weight: bold;
+            color: white;
+            border-radius: 80px;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-secondary:hover {
+            transform: scale(1.02);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.7rem;
+            color: #b28094;
+        }
+
+        @media (max-width: 768px) {
+            .dual-columns { flex-direction: column; }
+            .trait-item { padding: 0.5rem 0.8rem; }
+            .trait-text { font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="test-header">
+        <h1>✨ Découvre ta personnalité MBTI ✨</h1>
+        <p>Choisis les traits qui te correspondent le plus</p>
+        <div class="heart-divider">♡ ✿ ♡ ✿ ♡</div>
+        <div class="info-box">
+            💡 <strong>Règle :</strong> Tu peux choisir plusieurs traits dans la même colonne !<br>
+            Mais tu ne peux PAS choisir deux traits opposés qui ont le même numéro.
+        </div>
+    </div>
+
+    <!-- Dimension 1: E vs I -->
+    <div class="section-card">
+        <div class="section-title">
+            <h2><span>①</span> Énergie : Extraversion (E) vs Introversion (I)</h2>
+        </div>
+        <div class="dual-columns">
+            <div class="trait-column">
+                <div class="trait-header">
+                    <span class="trait-letter">E</span>
+                    <span class="trait-name">Extraversion 🌸</span>
+                    <button class="reset-column-btn" onclick="resetColumn('e')">Tout désélectionner</button>
+                </div>
+                <div class="trait-list" id="e-list"></div>
+                <div class="progress-indicator" id="e-progress">0/5 sélectionnés</div>
+            </div>
+            <div class="trait-column">
+                <div class="trait-header">
+                    <span class="trait-letter">I</span>
+                    <span class="trait-name">Introversion 🌙</span>
+                    <button class="reset-column-btn" onclick="resetColumn('i')">Tout désélectionner</button>
+                </div>
+                <div class="trait-list" id="i-list"></div>
+                <div class="progress-indicator" id="i-progress">0/5 sélectionnés</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dimension 2: S vs N -->
+    <div class="section-card">
+        <div class="section-title">
+            <h2><span>②</span> Perception : Sensation (S) vs Intuition (N)</h2>
+        </div>
+        <div class="dual-columns">
+            <div class="trait-column">
+                <div class="trait-header">
+                    <span class="trait-letter">S</span>
+                    <span class="trait-name">Sensation 🍃</span>
+                    <button class="reset-column-btn" onclick="resetColumn('s')">Tout désélectionner</button>
+                </div>
+                <div class="trait-list" id="s-list"></div>
+                <div class="progress-indicator" id="s-progress">0/5 sélectionnés</div>
+            </div>
+            <div class="trait-column">
+                <div class="trait-header">
+                    <span class="trait-letter">N</span>
+                    <span class="trait-name">Intuition 🌟</span>
+                    <button class="reset-column-btn" onclick="resetColumn('n')">Tout désélectionner</button>
+                </div>
+                <div class="trait-list" id="n-list"></div>
+                <div class="progress-indicator" id="n-progress">0/5 sélectionnés</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dimension 3: T vs F -->
+    <div class="section-card">
+        <div class="section-title">
+            <h2><span>③</span> Décision : Pensée (T) vs Sentiment (F)</h2>
+        </div>
+        <div class="dual-columns">
+            <div class="trait-column">
+                <div class="trait-header">
+                    <span class="trait-letter">T</span>
+                    <span class="trait-name">Pensée ⚡</span>
+                    <button class="reset-column-btn" onclick="resetColumn('t')">Tout désélectionner</button>
+                </div>
+                <div class="trait-list" id="t-list"></div>
+                <div class="progress-indicator" id="t-progress">0/5 sélectionnés</div>
+            </div>
+            <div class="trait-column">
+                <div class="trait-header">
+                    <span class="trait-letter">F</span>
+                    <span class="trait-name">Sentiment 💖</span>
+                    <button class="reset-column-btn" onclick="resetColumn('f')">Tout désélectionner</button>
+                </div>
+                <div class="trait-list" id="f-list"></div>
+                <div class="progress-indicator" id="f-progress">0/5 sélectionnés</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dimension 4: J vs P -->
+    <div class="section-card">
+        <div class="section-title">
+            <h2><span>④</span> Action : Jugement (J) vs Perception (P)</h2>
+        </div>
+        <div class="dual-columns">
+            <div class="trait-column">
+                <div class="trait-header">
+                    <span class="trait-letter">J</span>
+                    <span class="trait-name">Jugement 📌</span>
+                    <button class="reset-column-btn" onclick="resetColumn('j')">Tout désélectionner</button>
+                </div>
+                <div class="trait-list" id="j-list"></div>
+                <div class="progress-indicator" id="j-progress">0/5 sélectionnés</div>
+            </div>
+            <div class="trait-column">
+                <div class="trait-header">
+                    <span class="trait-letter">P</span>
+                    <span class="trait-name">Perception 🌀</span>
+                    <button class="reset-column-btn" onclick="resetColumn('p')">Tout désélectionner</button>
+                </div>
+                <div class="trait-list" id="p-list"></div>
+                <div class="progress-indicator" id="p-progress">0/5 sélectionnés</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="reveal-section">
+        <button class="btn-primary" id="revealBtn">✨ Révéler ma personnalité ✨</button>
+    </div>
+
+    <div id="resultCard" class="result-card">
+        <div class="result-type" id="resultType">----</div>
+        <div class="result-name" id="resultName"></div>
+        <div class="result-desc" id="resultDesc"></div>
+       
+    </div>
+
+    <footer>♡ Choisis tous les traits qui te ressemblent (même dans la même colonne) ♡</footer>
+</div>
+
+<script>
+    // Définition des 5 traits pour chaque catégorie
+    const traitsData = {
+        e: [
+            "Je suis dynamique et plein(e) d'énergie",
+            "J'aime parler et m'exprimer",
+            "Je pense à voix haute",
+            "J'agis, puis je réfléchis",
+            "Je préfère parler plutôt qu'écrire"
+        ],
+        i: [
+            "Je suis calme et posé(e)",
+            "J'aime écouter les autres",
+            "Je réfléchis posément avant d'agir",
+            "Je pense, puis j'agis",
+            "Je préfère écrire plutôt que parler"
+        ],
+        s: [
+            "Je m'attache aux faits et aux détails",
+            "Je vis dans l'instant présent",
+            "Je fais confiance à l'expérience",
+            "Je reste fidèle aux méthodes éprouvées",
+            "Je préfère les instructions étape par étape"
+        ],
+        n: [
+            "J'aime apprendre de nouvelles compétences",
+            "Je n'aime pas la routine",
+            "Je suis attiré(e) par les idées originales",
+            "Je suis imaginatif(ve), je vois les possibilités",
+            "Je suis théorique et conceptuel(le)"
+        ],
+        t: [
+            "Je m'efforce d'être objectif(ve) dans mes décisions",
+            "J'ai un sens aigu de la justice",
+            "Je suis critique, je remarque vite les défauts",
+            "Je suis franc(he) et direct(e)",
+            "Je suis sensible à la logique et aux faits"
+        ],
+        f: [
+            "Je suis chaleureux(se) et amical(e)",
+            "J'ai tendance à la clémence et au pardon",
+            "Je prends les choses à cœur",
+            "Je suis diplomate et fais preuve de tact",
+            "Je fais confiance à mes impressions et à mon cœur"
+        ],
+        j: [
+            "J'aime organiser et planifier",
+            "Je suis ponctuel(le) et je termine mes projets",
+            "Je travaille d'abord, je m'amuse ensuite",
+            "Je suis à l'aise dans les structures définies",
+            "Je n'aime pas le stress de dernière minute"
+        ],
+        p: [
+            "J'aime vivre de façon flexible",
+            "Je n'aime pas les délais stricts",
+            "J'aime démarrer des projets",
+            "Je conserve ma liberté d'action",
+            "Je reste ouvert(e) et aime les nouvelles expériences"
+        ]
+    };
+
+    // État des sélections: pour chaque colonne, un tableau des indices sélectionnés
+    let selections = {
+        e: new Set(),
+        i: new Set(),
+        s: new Set(),
+        n: new Set(),
+        t: new Set(),
+        f: new Set(),
+        j: new Set(),
+        p: new Set()
+    };
+
+    // Map des opposés
+    const oppositeMap = {
+        e: 'i', i: 'e',
+        s: 'n', n: 's',
+        t: 'f', f: 't',
+        j: 'p', p: 'j'
+    };
+
+    // Initialiser l'affichage
+    function initTraits() {
+        const columns = ['e', 'i', 's', 'n', 't', 'f', 'j', 'p'];
+        columns.forEach(col => {
+            const container = document.getElementById(`${col}-list`);
+            const traits = traitsData[col];
+            container.innerHTML = '';
+            traits.forEach((trait, idx) => {
+                const div = document.createElement('div');
+                div.className = 'trait-item';
+                div.dataset.index = idx;
+                div.dataset.column = col;
+                div.innerHTML = `
+                    <div class="trait-check">○</div>
+                    <div class="trait-text">${trait}</div>
+                `;
+                div.addEventListener('click', () => toggleTrait(col, idx));
+                container.appendChild(div);
+            });
+            updateColumnDisplay(col);
+            updateProgress(col);
+        });
+    }
+
+    // Basculer la sélection d'un trait
+    function toggleTrait(column, index) {
+        const opposite = oppositeMap[column];
+        const isSelected = selections[column].has(index);
+        
+        if (isSelected) {
+            // Désélectionner ce trait
+            selections[column].delete(index);
+        } else {
+            // Vérifier si le trait opposé avec le même index est sélectionné
+            if (selections[opposite].has(index)) {
+                // Si oui, on le désélectionne d'abord
+                selections[opposite].delete(index);
+                updateColumnDisplay(opposite);
+                updateProgress(opposite);
+            }
+            // Puis on sélectionne le nouveau
+            selections[column].add(index);
+        }
+        
+        // Mettre à jour l'affichage
+        updateColumnDisplay(column);
+        updateProgress(column);
+    }
+
+    // Mettre à jour l'affichage d'une colonne
+    function updateColumnDisplay(column) {
+        const container = document.getElementById(`${column}-list`);
+        const items = container.querySelectorAll('.trait-item');
+        const selectedSet = selections[column];
+        
+        items.forEach((item, idx) => {
+            const checkSpan = item.querySelector('.trait-check');
+            if (selectedSet.has(idx)) {
+                item.classList.add('selected');
+                checkSpan.innerHTML = '●';
+                checkSpan.style.color = '#c26084';
+            } else {
+                item.classList.remove('selected');
+                checkSpan.innerHTML = '○';
+                checkSpan.style.color = '#d4a0b6';
+            }
+        });
+    }
+
+    // Mettre à jour le compteur de progression
+    function updateProgress(column) {
+        const progressSpan = document.getElementById(`${column}-progress`);
+        const count = selections[column].size;
+        progressSpan.innerHTML = `${count}/5 sélectionné${count !== 1 ? 's' : ''}`;
+    }
+
+    // Réinitialiser une colonne
+    function resetColumn(column) {
+        selections[column].clear();
+        updateColumnDisplay(column);
+        updateProgress(column);
+    }
+
+    // Calculer le type MBTI basé sur les sélections
+    function calculateMBTI() {
+        // Compter le nombre de sélections dans chaque catégorie
+        let eCount = selections.e.size;
+        let iCount = selections.i.size;
+        let sCount = selections.s.size;
+        let nCount = selections.n.size;
+        let tCount = selections.t.size;
+        let fCount = selections.f.size;
+        let jCount = selections.j.size;
+        let pCount = selections.p.size;
+        
+        // Déterminer chaque lettre
+        // Si égalité, on donne la préférence à celle qui a le plus de poids émotionnel (personnalisation)
+        let letter1, letter2, letter3, letter4;
+        
+        if (eCount > iCount) letter1 = 'E';
+        else if (iCount > eCount) letter1 = 'I';
+        else letter1 = (Math.random() > 0.5 ? 'E' : 'I');
+        
+        if (sCount > nCount) letter2 = 'S';
+        else if (nCount > sCount) letter2 = 'N';
+        else letter2 = (Math.random() > 0.5 ? 'S' : 'N');
+        
+        if (tCount > fCount) letter3 = 'T';
+        else if (fCount > tCount) letter3 = 'F';
+        else letter3 = (Math.random() > 0.5 ? 'T' : 'F');
+        
+        if (jCount > pCount) letter4 = 'J';
+        else if (pCount > jCount) letter4 = 'P';
+        else letter4 = (Math.random() > 0.5 ? 'J' : 'P');
+        
+        return letter1 + letter2 + letter3 + letter4;
+    }
+
+    // Base de données des personnalités
+    const personalityDatabase = {
+        'INTJ': { name: "L'Architecte", desc: "Stratège visionnaire, esprit indépendant. Tu construis des mondes avec rigueur et une profondeur mystérieuse." },
+        'INTP': { name: "L'Innovateur", desc: "Esprit curieux, amoureux des idées abstraites. Tu cherches la vérité avec une douce excentricité." },
+        'ENTJ': { name: "Le Commandant", desc: "Leader charismatique, ambitieux et inspirant. Tu guides avec force et bienveillance." },
+        'ENTP': { name: "L'Innovateur inspiré", desc: "Débatteur inventif, toujours enthousiaste. Tu vois mille possibilités et sais les partager." },
+        'INFJ': { name: "L'Avocat", desc: "Idéaliste mystique, guide silencieux. Ton empathie et ta vision changent le monde avec douceur." },
+        'INFP': { name: "Le Médiateur", desc: "Poète altruiste, toujours prêt à défendre une cause. Ton cœur est un océan de rêves." },
+        'ENFJ': { name: "Le Protagoniste", desc: "Leader inspirant, fascinant et humain. Tu élèves les autres avec ton charisme sincère." },
+        'ENFP': { name: "L'Inspirateur", desc: "Esprit libre, enthousiaste et créatif. Tu trouves une raison de sourire en chaque instant." },
+        'ISTJ': { name: "Le Logisticien", desc: "Fiable et méticuleux, tu incarnes la stabilité. Ta loyauté est un trésor rare." },
+        'ISFJ': { name: "Le Défenseur", desc: "Protecteur discret, tu prends soin des autres avec une dévotion infinie." },
+        'ESTJ': { name: "Le Directeur", desc: "Efficace et structuré, tu organises le chaos avec autorité et pragmatisme." },
+        'ESFJ': { name: "Le Consul", desc: "Sociable et bienveillant, tu crées l'harmonie autour de toi. Ton soutien est précieux." },
+        'ISTP': { name: "Le Virtuose", desc: "Audacieux et pragmatique, tu explores le monde avec une ingéniosité calme." },
+        'ISFP': { name: "L'Aventurier", desc: "Artiste flexible, charmant et spontané. Tu vis l'instant avec une élégance discrète." },
+        'ESTP': { name: "L'Entrepreneur", desc: "Énergique et perspicace, tu aimes l'action et les défis. Un esprit vif et séduisant." },
+        'ESFP': { name: "L'Amuseur", desc: "Spontané, enthousiaste, avec toi on ne s'ennuie jamais. Rayon de soleil naturel." }
+    };
+
+    function getPersonalityDetails(typeCode) {
+        if (personalityDatabase[typeCode]) {
+            return personalityDatabase[typeCode];
+        }
+        return { name: "Esprit Unique", desc: "Tu es un mélange rare, une personnalité qui tisse sa propre magie." };
+    }
+
+    function saveAndShowResult() {
+        const type = calculateMBTI();
+        const details = getPersonalityDetails(type);
+        
+        // Sauvegarder dans localStorage
+        const personalityData = {
+            typeCode: type,
+            name: details.name,
+            desc: details.desc
+        };
+        localStorage.setItem('userPersonality', JSON.stringify(personalityData));
+        
+        // Afficher le résultat
+        const resultCard = document.getElementById('resultCard');
+        resultCard.style.display = 'block';
+        document.getElementById('resultType').innerHTML = type + " ♡";
+        document.getElementById('resultName').innerHTML = details.name;
+        document.getElementById('resultDesc').innerHTML = details.desc;
+        
+        resultCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // Événements
+    document.getElementById('revealBtn').addEventListener('click', saveAndShowResult);
+    
+    
+
+    // Exposer resetColumn globalement
+    window.resetColumn = resetColumn;
+    window.toggleTrait = toggleTrait;
+    
+    // Initialisation
+    initTraits();
+</script>
+</body>
+</html>

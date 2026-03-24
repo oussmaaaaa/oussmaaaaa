@@ -1,0 +1,79 @@
+body {
+  text-align: center;
+  margin-top: 30px;
+  font-family: "Courier";
+  
+  text-decoration: wavy;
+  background-image: url(gitare.png);
+   background-size: cover;
+    background-position: center;
+    background-attachment:fixed;
+    background-repeat: no-repeat;
+   
+}
+
+
+#thankyou {
+  font-size: 50px;
+  margin-bottom: 20px;
+  color: #ff9494;
+  text-decoration: wavy;
+  margin-top: 50px;
+}
+#rizz {
+  margin-bottom: 10 px;
+  width: 27%;
+  height: auto;
+  
+}
+.button:hover {
+  background-color: #ff9494;
+  color: #ffe3e1;
+  border: 2px solid #ff9494;
+  box-shadow: 1px 1px 2px #ffe3e1;
+  margin-left: 400px; 
+     
+}
+
+#anais {
+    color: rgb(12, 112, 162);
+    text-align: right;
+    
+    margin-left: 1023px;
+    margin-top: 461px;
+}
+#love{
+    color:#0a3f03;
+    text-align: unset;
+    margin-top: 515px;
+    text-decoration: wavy;
+}
+#ouss{
+    
+    text-align: left;
+   
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+ background: linear-gradient(95deg, #e0a1bb, #c97e9c);
+    border: none;
+    padding: 0.9rem 1.8rem;
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+    border-radius: 60px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px; 
+    margin-left: 100px;
+    margin-top:45px;
+}
+    #backgroundMusic {
+    display: none;
+    margin-left: 100px;
+    background-image: url(stitch1\ -\ Edited.jpg);
+    }

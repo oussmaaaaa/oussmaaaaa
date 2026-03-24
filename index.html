@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>anais</title>
+     <link rel="stylesheet" href="index.css">
+
+<body >
+
+    <p>
+     Me ferais-tu l'honneur de m'épouser… ?
+    </p>
+   
+    
+    
+    <button class="answerButton" id="oussama" onclick="window.location.href='ana.html'">Oui, je t'accepte </button>
+   
+    <button class="answerButton" id="noButton">Non, je ne veux pas o(╥﹏╥)o</button>
+      
+  
+  <script>
+      document
+        .getElementById("noButton")
+        .addEventListener("click", function () {
+          var yesButton = document.querySelector(
+            'button[onclick*="ana.html"]'
+          );
+          var currentFontSize = parseInt(
+            window.getComputedStyle(yesButton).fontSize
+          );
+          yesButton.style.fontSize = currentFontSize + 10 + "px"; // Increase font size by 5px
+        });
+   </script>
+ </body>
+</html>
